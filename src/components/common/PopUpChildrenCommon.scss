@@ -1,0 +1,27 @@
+.child_container{
+    width: 100%;
+}
+.form_child_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // background-color: rgb(231, 231, 231);
+    background:linear-gradient(90deg, rgba(0, 188, 212, 1) 0%, rgba(7, 58, 187, 1) 100%);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form_child_header > h3{
+    color: white !important;
+}
+
+.child_text{
+    margin-left: 15px;
+}
+.child_cancel_button{
+    margin-right: 15px;
+}
+.child_title{
+    margin-top: 10px;
+    margin-left: 10px;
+}
