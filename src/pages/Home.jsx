@@ -17,10 +17,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import bgImg from "./../assets/bg-main.jpg";
-import RootContext from "./../utils/context";
 
 const Home = () => {
-  const rootContext = useContext(RootContext);
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [weight, setWeight] = useState("");
@@ -29,11 +27,10 @@ const Home = () => {
   const [totalCal, setCal] = useState(0);
   const [gender, setGender] = useState("male");
   const [activity, setActivity] = useState("normal");
-  const [finishLoding, setFinishLodign] = useState(true)
 
   useEffect(() => {
-    if (rootContext.login) {
       const token = localStorage.getItem("jwt")
+      if(token) {
       axios.get(
         "http://127.0.0.1:8000/api/user/profile",
         {
@@ -47,10 +44,9 @@ const Home = () => {
         setAge(age);
         setWeight(weight)
         setHeight(height)
-        setFinishLodign(!finishLoding)
       })
     }
-  }, [finishLoding]);
+  }, []);
 
   function claculateCal() {
     let total;
@@ -83,8 +79,8 @@ const Home = () => {
   }
 
   function saveToDB() {
-    if (rootContext.login) {
       const token = localStorage.getItem("jwt");
+      if (token) {
       axios
         .post(
           "http://127.0.0.1:8000/api/user/activity",
