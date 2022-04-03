@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Grid,
   Avatar,
@@ -8,11 +8,12 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import {Link} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import FormTemplate from "../components/Login/FormTemplate";
-import validateEmail from "./../utils/validateEmail"
+import validateEmail from "./../utils/validateEmail";
+import RootContext from './../utils/context';
 
 const avatarStyle = {
   backgroundColor: "primary.main",
@@ -26,21 +27,30 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [remebmerMe, setRemebmerMe] = useState(true);
   const [emailFieldError, setEmailFieldError] = useState(false);
+  const rootContext = useContext(RootContext)
+  const navigate = useNavigate()
 
   const handleEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
-    
+
     if (!validateEmail(email)) setEmailFieldError(true);
-    else if (validateEmail(email))
-      setEmailFieldError(false);
+    else if (validateEmail(email)) setEmailFieldError(false);
   };
 
   const handleLoginSubmit = async () => {
     try {
-      const result = await axios.post("http://127.0.0.1:8000/api/user/login", {email, password})
-      console.log(result)
-    } catch (error) {}
+      const result = await axios.post("http://127.0.0.1:8000/api/user/login", {
+        email,
+        password,
+      });
+      if(result.status == 200) {
+        rootContext.storeJwt(result.data.data)
+        navigate("/")
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -73,7 +83,7 @@ const Login = () => {
         size="small"
         value={password}
         onChange={(e) => {
-          setPassword(e.target.value)
+          setPassword(e.target.value);
         }}
       />
       <FormControlLabel

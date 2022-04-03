@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { AppBar, Toolbar, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import RootContext from './../../utils/context';
+import HeaderMenu from "../Home/HeaderMenu";
 
 const navbarBtn = {
   border: "2px solid #fff",
@@ -14,6 +16,7 @@ const navbarBtn = {
 
 const Header = () => {
   const [jwt, setJwt] = useState("");
+  const rootContext = useContext(RootContext)
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -38,16 +41,8 @@ const Header = () => {
           Calorie Calculator
         </Typography>
         <div>
-          {jwt ? (
-            <Link to="/user/me">
-              <AccountCircleIcon
-                sx={{
-                  cursor: "pointer",
-                  fontSize: "2.5rem",
-                  color: "#fff",
-                }}
-              />
-            </Link>
+          {rootContext.login ? (
+            <HeaderMenu/>
           ) : (
             <div>
               <Button

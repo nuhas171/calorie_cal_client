@@ -9,8 +9,7 @@ const FormTemplate = (props) => {
     <div
       style={{
         backgroundImage: "radial-gradient(circle,#39659f,#16253e)",
-        height: "100vh",
-        width: "100%",
+        padding: "1em",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

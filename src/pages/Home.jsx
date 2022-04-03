@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Card,
   CardContent,
@@ -10,15 +10,47 @@ import {
   RadioGroup,
   Radio,
   FormLabel,
+  InputLabel,
+  MenuItem,
+  Select,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import bgImg from "./../assets/bg-main.jpg";
+import RootContext from "./../utils/context";
 
 const Home = () => {
+  const rootContext = useContext(RootContext);
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [age, setAge] = useState("");
-  const [cal, setCal] = useState(0);
+  const [totalCal, setCal] = useState(0);
   const [gender, setGender] = useState("male");
+  const [activity, setActivity] = useState("normal");
+  const [finishLoding, setFinishLodign] = useState(true)
+
+  useEffect(() => {
+    if (rootContext.login) {
+      const token = localStorage.getItem("jwt")
+      axios.get(
+        "http://127.0.0.1:8000/api/user/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ).then(res => {
+        const {age, name, weight, height} = res.data.data
+        setName(name);
+        setAge(age);
+        setWeight(weight)
+        setHeight(height)
+        setFinishLodign(!finishLoding)
+      })
+    }
+  }, [finishLoding]);
 
   function claculateCal() {
     let total;
@@ -29,11 +61,52 @@ const Home = () => {
         6.25 * (Number(height) * 30.48) -
         5 * Number(age) +
         5;
-      setCal(total);
     } else if (gender == "female") {
       total =
         10 * Number(weight) + 6.25 * (Number(height) * 30.48) - 5 * Number(age);
-      setCal(total);
+    }
+
+    switch (activity) {
+      case "normal":
+        total = total * 1.2;
+        break;
+
+      case "moderate":
+        total = total * 1.5;
+        break;
+      case "intensive":
+        total = total * 1.9;
+        break;
+    }
+
+    setCal(Number.parseInt(total));
+  }
+
+  function saveToDB() {
+    if (rootContext.login) {
+      const token = localStorage.getItem("jwt");
+      axios
+        .post(
+          "http://127.0.0.1:8000/api/user/activity",
+          {
+            name,
+            weight,
+            height,
+            age,
+            gender,
+            activity,
+            total: totalCal,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => alert("activity saved to db"));
+    } else {
+      alert("Your are not logged in. Please login to save activity");
+      navigate("/login");
     }
   }
 
@@ -44,16 +117,33 @@ const Home = () => {
           width: "70%",
           margin: "3em auto",
           textAlign: "center",
-          padding: "2em",
+          backgroundImage: `url(${bgImg})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          position: "relative",
+          zIndex: "2",
         }}
       >
-        <Typography variant="h4">Calculate Your Daily Calorie Need</Typography>
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            background: "#fff",
+            opacity: ".8",
+            zIndex: "-1",
+          }}
+        ></div>
+        <Typography variant="h4" style={{ padding: "1em" }}>
+          Calculate Your Daily Calorie Need
+        </Typography>
         <CardContent
           sx={{
             display: "flex",
             flexFlow: "row wrap",
             gap: "1em",
-            justifyContent: "flex-start",
+            justifyContent: "space-between",
+            padding: "2.5em !important",
           }}
         >
           <TextField
@@ -83,6 +173,20 @@ const Home = () => {
             value={age}
             onChange={(e) => setAge(e.target.value)}
           />
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">
+              Select Activity
+            </InputLabel>
+            <Select
+              value={activity}
+              label="Select Activity"
+              onChange={(e) => setActivity(e.target.value)}
+            >
+              <MenuItem value="normal">Normal</MenuItem>
+              <MenuItem value="moderate">Moderate</MenuItem>
+              <MenuItem value="intensive">Intensive</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl
             sx={{
               "& .MuiFormGroup-root": {
@@ -112,8 +216,22 @@ const Home = () => {
         </CardContent>
       </Card>
       <>
-        <Card sx={{width: "70%", margin: "0 auto"}}>
-          <Typography variant="h6">Total Calorie You Need {cal}</Typography>
+        <Card
+          sx={{
+            width: "70%",
+            margin: "0 auto",
+            padding: "1.5em",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="h6">
+            Total Calorie You Need {totalCal}
+          </Typography>
+          <Button variant="contained" onClick={saveToDB}>
+            {" "}
+            Save{" "}
+          </Button>
         </Card>
       </>
     </>

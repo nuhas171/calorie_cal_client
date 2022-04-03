@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Grid,
   Avatar,
@@ -8,13 +8,14 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import FormTemplate from "../components/Login/FormTemplate";
 import checkPassStrength from "../utils/validatePassword";
 import validateEmail from "../utils/validateEmail";
 import Notification from "../components/common/Notification";
-import axios from "axios"
+import axios from "axios";
+import RootContext from "../utils/context";
 
 const avatarStyle = {
   backgroundColor: "primary.main",
@@ -24,7 +25,7 @@ const avatarStyle = {
 const label = { inputProps: { "aria-label": "Remember Me" } };
 
 const SignUp = () => {
-  const navigate = useNavigate ()
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +35,11 @@ const SignUp = () => {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [emailFieldError, setEmailFieldError] = useState(false);
   const [message, setMessage] = useState("");
-  const [type, setType] = useState("")
+  const [type, setType] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [age, setAge] = useState("")
+  const rootContext = useContext(RootContext)
 
   useEffect(() => {
     if (confirmPass) {
@@ -52,9 +57,9 @@ const SignUp = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setMessage("")
-    }, 30000)
-  })
+      setMessage("");
+    }, 30000);
+  });
 
   const handleEmail = (e) => {
     const email = e.target.value;
@@ -69,17 +74,22 @@ const SignUp = () => {
       name,
       email,
       password,
-      confirmPass
+      confirmPass,
+      height,
+      weight, 
+      age
     };
 
     try {
-      const result = await axios.post("http://127.0.0.1:8000/api/user/sign-up", data)
-      localStorage.setItem('jwt', result.data.data);
-      navigate("/")
-    } catch(error) {
-      console.log(error.message)
+      const result = await axios.post(
+        "http://127.0.0.1:8000/api/user/sign-up",
+        data
+      );
+      rootContext.storeJwt(result.data.data)
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
     }
-    
   };
 
   return (
@@ -149,6 +159,36 @@ const SignUp = () => {
           value={confirmPass}
           error={conPassErr}
           onChange={(e) => setConPassword(e.target.value)}
+        />
+        <TextField
+          label="Height"
+          placeholder="Enter Height in Fit"
+          fullWidth
+          required
+          size="small"
+          value={height}
+          
+          onChange={(e) => setHeight(e.target.value)}
+        />
+        <TextField
+          label="Weight"
+          placeholder="Enter Weight in kg"
+          fullWidth
+          required
+          size="small"
+          value={weight}
+          
+          onChange={(e) => setWeight(e.target.value)}
+        />
+        <TextField
+          label="Age"
+          placeholder="Enter Age"
+          fullWidth
+          required
+          size="small"
+          value={age}
+          
+          onChange={(e) => setAge(e.target.value)}
         />
         <FormControlLabel
           label={
