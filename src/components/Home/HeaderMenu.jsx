@@ -12,6 +12,7 @@ import { blue } from "@mui/material/colors";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import HistoryIcon from '@mui/icons-material/History';
 import RootContext from "../../utils/context";
 
 const menuList = [
@@ -21,10 +22,16 @@ const menuList = [
     icon: <PersonIcon />,
   },
   {
+    title: "History",
+    link: "/history",
+    icon: <HistoryIcon/>
+  },
+  {
     title: "Logout",
     link: "/",
     icon: <LogoutIcon />,
   },
+  
 ];
 
 function SimpleDialog({ onClose, selectedValue, open }) {
@@ -40,7 +47,7 @@ function SimpleDialog({ onClose, selectedValue, open }) {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <List sx={{ pt: 0 }}>
+      <List sx={{ padding: "2em" }}>
         {menuList.map((menu) => (
           <ListItem
             component={Link}
@@ -89,7 +96,7 @@ export default function HeaderMenu() {
   return (
     <div>
       <IconButton onClick={handleClickOpen}>
-        <AccountCircleIcon />
+        <AccountCircleIcon sx={{color: "#fff", fontSize: "1.5em"}}/>
       </IconButton>
       <SimpleDialog
         selectedValue={selectedValue}

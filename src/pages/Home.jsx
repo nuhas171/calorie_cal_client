@@ -29,22 +29,21 @@ const Home = () => {
   const [activity, setActivity] = useState("normal");
 
   useEffect(() => {
-      const token = localStorage.getItem("jwt")
-      if(token) {
-      axios.get(
-        "http://127.0.0.1:8000/api/user/profile",
-        {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      axios
+        .get("http://127.0.0.1:8000/api/user/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
-      ).then(res => {
-        const {age, name, weight, height} = res.data.data
-        setName(name);
-        setAge(age);
-        setWeight(weight)
-        setHeight(height)
-      })
+        })
+        .then((res) => {
+          const { age, name, weight, height } = res.data.data;
+          setName(name);
+          setAge(age);
+          setWeight(weight);
+          setHeight(height);
+        });
     }
   }, []);
 
@@ -79,8 +78,8 @@ const Home = () => {
   }
 
   function saveToDB() {
-      const token = localStorage.getItem("jwt");
-      if (token) {
+    const token = localStorage.getItem("jwt");
+    if (token) {
       axios
         .post(
           "http://127.0.0.1:8000/api/user/activity",
@@ -107,29 +106,26 @@ const Home = () => {
   }
 
   return (
-    <>
+    <div
+      style={{
+        backgroundImage: `url(${bgImg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        // width: "100%",
+        padding: "2em",
+        // height: "100vh"
+      }}
+    >
       <Card
         sx={{
           width: "70%",
-          margin: "3em auto",
+          margin: "0 auto",
           textAlign: "center",
-          backgroundImage: `url(${bgImg})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
           position: "relative",
-          zIndex: "2",
+          padding: "1.5em",
+          marginBottom: "2em"
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            background: "#fff",
-            opacity: ".8",
-            zIndex: "-1",
-          }}
-        ></div>
         <Typography variant="h4" style={{ padding: "1em" }}>
           Calculate Your Daily Calorie Need
         </Typography>
@@ -230,7 +226,7 @@ const Home = () => {
           </Button>
         </Card>
       </>
-    </>
+    </div>
   );
 };
 

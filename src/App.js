@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Header from "./components/common/Header";
 import ProfilePage from "./pages/Profile";
+import History from "./pages/History"
 import RootContext from "./utils/context";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -43,6 +44,7 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/sign-up" element={<SignUp />} />
             <Route exact path="/user/me" element={<ProfilePage />} />
+            <Route exact path="/history" element={<History />} />
           </Routes>
         </Router>
       </div>
