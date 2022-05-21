@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,10 +13,14 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Paper,
+  CardMedia
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import bgImg from "./../assets/bg-main.jpg";
+import { rapidApiAuth, rapidApiHost } from "./../apiConfig";
+import FuzzySearch from "fuzzy-search";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -27,6 +31,20 @@ const Home = () => {
   const [totalCal, setCal] = useState(0);
   const [gender, setGender] = useState("male");
   const [activity, setActivity] = useState("normal");
+  const [allExercises, setAllExercises] = useState([]);
+  const searcher = new FuzzySearch(allExercises, ["bodyPart", "equipment", "name"])
+  const [searchResult, setSearchResult] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("https://exercisedb.p.rapidapi.com/exercises", {
+        headers: {
+          "X-RapidAPI-Host": rapidApiHost,
+          "X-RapidAPI-Key": rapidApiAuth,
+        },
+      })
+      .then((res) => setAllExercises(res.data));
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -123,7 +141,7 @@ const Home = () => {
           textAlign: "center",
           position: "relative",
           padding: "1.5em",
-          marginBottom: "2em"
+          marginBottom: "2em",
         }}
       >
         <Typography variant="h4" style={{ padding: "1em" }}>
@@ -139,12 +157,14 @@ const Home = () => {
           }}
         >
           <TextField
+            size="small"
             label="Name"
             placeholder="Enter your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
+            size="small"
             label="Weight"
             placeholder="Enter your weight in fit"
             type="number"
@@ -152,6 +172,7 @@ const Home = () => {
             onChange={(e) => setWeight(e.target.value)}
           />
           <TextField
+            size="small"
             label="Height"
             placeholder="Enter your height in fit"
             type="number"
@@ -159,6 +180,7 @@ const Home = () => {
             onChange={(e) => setHeight(e.target.value)}
           />
           <TextField
+            size="small"
             label="Age"
             placeholder="Enter your age"
             type="number"
@@ -170,6 +192,7 @@ const Home = () => {
               Select Activity
             </InputLabel>
             <Select
+              size="small"
               value={activity}
               label="Select Activity"
               onChange={(e) => setActivity(e.target.value)}
@@ -180,6 +203,7 @@ const Home = () => {
             </Select>
           </FormControl>
           <FormControl
+            size="small"
             sx={{
               "& .MuiFormGroup-root": {
                 display: "flex",
@@ -189,6 +213,7 @@ const Home = () => {
           >
             <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
             <RadioGroup
+              
               aria-labelledby="demo-radio-buttons-group-label"
               value={gender}
               onChange={(event) => setGender(event.target.value)}
@@ -202,7 +227,7 @@ const Home = () => {
               <FormControlLabel value="male" control={<Radio />} label="Male" />
             </RadioGroup>
           </FormControl>
-          <Button onClick={claculateCal} variant="contained">
+          <Button onClick={claculateCal} variant="contained" size="small">
             Calculate
           </Button>
         </CardContent>
@@ -226,6 +251,38 @@ const Home = () => {
           </Button>
         </Card>
       </>
+      <Paper
+        sx={{
+          width: "70%",
+          margin: "1em auto",
+          padding: "1.5em",
+          marginBottom: "2em",
+          textAlign: "center"
+        }}
+      >
+        <Typography variant="h6">Exercises</Typography>
+        <TextField fullWidth size="small" label="Search exercises" onChange={(e) => {
+          const result = searcher.search(e.target.value);
+          setSearchResult(result)
+        }} />
+        {
+          searchResult.map(exer => 
+          <Card sx={{margin: ".5em 0"}}>
+            <CardMedia
+              component="img"
+              height="auto"
+              width="auto"
+              image={exer.gifUrl}
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography variant="h6">{exer.name}</Typography>
+              <Typography variant="caption">{exer.bodyPart}</Typography>
+              <Typography variant="caption">{exer.equipment}</Typography>
+            </CardContent>
+          </Card>)
+        }
+      </Paper>
     </div>
   );
 };

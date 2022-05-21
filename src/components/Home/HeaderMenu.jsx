@@ -14,8 +14,26 @@ import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HistoryIcon from '@mui/icons-material/History';
 import RootContext from "../../utils/context";
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import SearchIcon from '@mui/icons-material/Search';
 
 const menuList = [
+  {
+    title: "Daily Food Menu",
+    link: "/food-menu",
+    icon: <RestaurantMenuIcon />
+  },
+  {
+    title: "Recipe",
+    link: "/recipe",
+    icon: <FastfoodIcon />
+  },
+  {
+    title: "Search Food",
+    link: "/search-food",
+    icon: <SearchIcon />
+  },
   {
     title: "Profile",
     link: "/user/me",

@@ -6,8 +6,13 @@ import Header from "./components/common/Header";
 import ProfilePage from "./pages/Profile";
 import History from "./pages/History"
 import RootContext from "./utils/context";
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import DailyFoodMenu from "./pages/DailyFoodMenu";
+import MyFoodList from "./pages/MyFoodList";
+import Recipe from './pages/Recipe';
+import SavedRecipe from './pages/SavedRecipe';
+import SearchFood from './pages/SearchFood';
+
 
 function App() {
   const [login, setLogin] = useState(false)
@@ -36,7 +41,7 @@ function App() {
       storeJwt: storeJwt,
       removeJwt: removeJwt
     }}>
-      <div className="App">
+      <div className="App" style={{background: "#f5f5f5", height: "100vh"}}>
         <Router>
           <Header />
           <Routes>
@@ -45,6 +50,11 @@ function App() {
             <Route exact path="/sign-up" element={<SignUp />} />
             <Route exact path="/user/me" element={<ProfilePage />} />
             <Route exact path="/history" element={<History />} />
+            <Route exact path="/food-menu" element={<DailyFoodMenu />} />
+            <Route exact path="/my-food-list" element={<MyFoodList />} />
+            <Route exact path="/recipe" element={<Recipe />} />
+            <Route exact path="/saved-recipe" element={<SavedRecipe />} />
+            <Route exact path="/search-food" element={<SearchFood />} />
           </Routes>
         </Router>
       </div>
