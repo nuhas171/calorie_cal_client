@@ -69,7 +69,7 @@ const Login = () => {
         placeholder="Enter Email Address"
         fullWidth
         required
-        size="small"
+        
         value={email}
         error={emailFieldError}
         onChange={handleEmail}
@@ -80,7 +80,7 @@ const Login = () => {
         type="password"
         fullWidth
         required
-        size="small"
+        
         value={password}
         onChange={(e) => {
           setPassword(e.target.value);

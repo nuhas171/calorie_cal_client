@@ -34,7 +34,7 @@ const SearchFood = () => {
           <TextField
             label="Search Food"
             value={searchText}
-            size="small"
+            
             sx={{background: "#fff", borderRadius: "4px"}}
             onChange={(e) => setSearch(e.target.value)}
           />

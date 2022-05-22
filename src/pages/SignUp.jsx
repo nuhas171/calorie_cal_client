@@ -110,7 +110,7 @@ const SignUp = () => {
           placeholder="Enter Full Name"
           fullWidth
           required
-          size="small"
+          
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -119,7 +119,7 @@ const SignUp = () => {
           placeholder="Enter Email Address"
           fullWidth
           required
-          size="small"
+          
           value={email}
           error={emailFieldError}
           onChange={(e) => handleEmail(e)}
@@ -130,7 +130,7 @@ const SignUp = () => {
           type="password"
           fullWidth
           required
-          size="small"
+          
           value={password}
           error={true}
           onChange={(e) => setPassword(e.target.value)}
@@ -155,7 +155,7 @@ const SignUp = () => {
           type="password"
           fullWidth
           required
-          size="small"
+          
           value={confirmPass}
           error={conPassErr}
           onChange={(e) => setConPassword(e.target.value)}
@@ -165,7 +165,7 @@ const SignUp = () => {
           placeholder="Enter Height in Fit"
           fullWidth
           required
-          size="small"
+          
           value={height}
           
           onChange={(e) => setHeight(e.target.value)}
@@ -175,7 +175,7 @@ const SignUp = () => {
           placeholder="Enter Weight in kg"
           fullWidth
           required
-          size="small"
+          
           value={weight}
           
           onChange={(e) => setWeight(e.target.value)}
@@ -185,7 +185,7 @@ const SignUp = () => {
           placeholder="Enter Age"
           fullWidth
           required
-          size="small"
+          
           value={age}
           
           onChange={(e) => setAge(e.target.value)}

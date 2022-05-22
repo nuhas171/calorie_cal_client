@@ -53,7 +53,7 @@ const Recipe = () => {
         <Grid container justifyContent="space-between">
           <Grid item md={7}>
             <Autocomplete
-              size="small"
+              
               options={options}
               onChange={(e, val) => {
                 if(val) setRecipe(val)

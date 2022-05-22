@@ -149,7 +149,6 @@ export default function DailyFoodMenu() {
               <Select
                 value={day}
                 onChange={handleChange}
-                size="small"
                 label="Select Day"
               >
                 <MenuItem value="saturday">Saturday</MenuItem>
@@ -173,7 +172,6 @@ export default function DailyFoodMenu() {
                 <Select
                   value={mealtime}
                   onChange={(e) => setMealtime(e.target.value)}
-                  size="small"
                   label="Select Meal Time"
                 >
                   <MenuItem value="breakfast">Breakfast</MenuItem>
@@ -188,7 +186,7 @@ export default function DailyFoodMenu() {
             <Autocomplete
               sx={{ minWidth: 220, width: "fit-content", ...bgColor }}
               multiple
-              size="small"
+              
               options={foods}
               onChange={(e, newVal) => setSelectedFood(newVal)}
               getOptionLabel={(option) => option}
@@ -233,7 +231,6 @@ export default function DailyFoodMenu() {
                 </CardContent>
                 <CardActions>
                   <Button
-                    size="small"
                     color="error"
                     onClick={() => deleteFood(f.foodId)}
                   >

@@ -157,14 +157,14 @@ const Home = () => {
           }}
         >
           <TextField
-            size="small"
+            
             label="Name"
             placeholder="Enter your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
-            size="small"
+            
             label="Weight"
             placeholder="Enter your weight in fit"
             type="number"
@@ -172,7 +172,7 @@ const Home = () => {
             onChange={(e) => setWeight(e.target.value)}
           />
           <TextField
-            size="small"
+            
             label="Height"
             placeholder="Enter your height in fit"
             type="number"
@@ -180,7 +180,7 @@ const Home = () => {
             onChange={(e) => setHeight(e.target.value)}
           />
           <TextField
-            size="small"
+            
             label="Age"
             placeholder="Enter your age"
             type="number"
@@ -192,7 +192,7 @@ const Home = () => {
               Select Activity
             </InputLabel>
             <Select
-              size="small"
+              
               value={activity}
               label="Select Activity"
               onChange={(e) => setActivity(e.target.value)}
@@ -203,7 +203,7 @@ const Home = () => {
             </Select>
           </FormControl>
           <FormControl
-            size="small"
+            
             sx={{
               "& .MuiFormGroup-root": {
                 display: "flex",
@@ -227,7 +227,7 @@ const Home = () => {
               <FormControlLabel value="male" control={<Radio />} label="Male" />
             </RadioGroup>
           </FormControl>
-          <Button onClick={claculateCal} variant="contained" size="small">
+          <Button onClick={claculateCal} variant="contained" >
             Calculate
           </Button>
         </CardContent>
@@ -261,7 +261,7 @@ const Home = () => {
         }}
       >
         <Typography variant="h6">Exercises</Typography>
-        <TextField fullWidth size="small" label="Search exercises" onChange={(e) => {
+        <TextField fullWidth  label="Search exercises" onChange={(e) => {
           const result = searcher.search(e.target.value);
           setSearchResult(result)
         }} />
