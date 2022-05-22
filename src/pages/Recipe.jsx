@@ -9,11 +9,10 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import { apiKey, appId } from "./../apiConfig";
+import { recipeAppId, recipeAccToken } from "./../apiConfig";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-
-console.log(apiKey, appId)
+import bgImg from "./../assets/Recipe.jpg"
 
 const Recipe = () => {
   const [recipe, setRecipe] = useState({});
@@ -50,7 +49,7 @@ const Recipe = () => {
 
   return (
     <>
-      <Paper sx={{ padding: "1em" }}>
+      <Paper sx={{ padding: "1em", backgroundImage:  `url(${bgImg})`, height: "inherit"}}>
         <Grid container justifyContent="space-between">
           <Grid item md={7}>
             <Autocomplete
@@ -65,9 +64,10 @@ const Recipe = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  sx={{background: "#fff", borderRadius: "4px"}}
                   onChange={async (e) => {
                     const result = await axios.get(
-                      `https://api.edamam.com/api/recipes/v2?type=public&beta=false&q=${e.target.value}&app_id=${appId}&app_key=${apiKey}`,
+                      `https://api.edamam.com/api/recipes/v2?type=public&beta=false&q=${e.target.value}&app_id=${recipeAppId}&app_key=${recipeAccToken}`,
                       {
                         headers: {
                           Accept: "application/json",
@@ -76,7 +76,7 @@ const Recipe = () => {
                     );
                     setOptions(result.data.hits);
                   }}
-                  label="Movie"
+                  label="Search recipe"
                 />
               )}
             />
@@ -85,12 +85,12 @@ const Recipe = () => {
             <Button variant="contained" onClick={saveRecipe}>Save</Button>
           </Grid>
           <Grid item md={2}>
-            <Button variant="outlined" component={Link} to="/saved-recipe" >saved recipes</Button>
+            <Button variant="contained" component={Link} to="/saved-recipe" >saved recipes</Button>
           </Grid>
         </Grid>
         {console.log(recipe)}
         {Object.keys(recipe).length && (
-          <Card sx={{ margin: "1em 0" }}>
+          <Card sx={{ margin: "1em auto", width: "50%", padding: "1em" }}>
             <CardMedia
               component="img"
               height="300"

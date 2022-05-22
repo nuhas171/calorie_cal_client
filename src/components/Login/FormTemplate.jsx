@@ -13,6 +13,7 @@ const FormTemplate = (props) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        height: "inherit"
       }}
     >
       <Stack

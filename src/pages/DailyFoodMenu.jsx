@@ -19,6 +19,12 @@ import {
 import axios from "axios";
 import { apiKey, appId } from "./../apiConfig";
 import { Link } from "react-router-dom";
+import bgImg from "./../assets/dailyFood.jpg"
+
+const bgColor = {
+  backgroundColor: "#fff",
+  borderRadius: "4px"
+}
 
 export default function DailyFoodMenu() {
   const [day, setDay] = useState("");
@@ -114,29 +120,31 @@ export default function DailyFoodMenu() {
         margin: "1em auto",
         padding: "1em",
         boxShadow: "none",
+        backgroundImage: `url(${bgImg})`,
+        height: "inherit"
       }}
     >
       <Grid container justifyContent="space-between">
-        <Grid item md={6}>
+        <Grid item md={4}>
           <Typography
             variant="h5"
-            sx={{ marginBottom: "1em" }}
+            sx={{ marginBottom: "1em", color: "#fff" }}
           >
             Add your daily food menu
           </Typography>
         </Grid>
         <Grid item md={6}>
-          <Button variant="outlined" component={Link} sx={{float: "right"}} to="/my-food-list">
+          <Button variant="outlined" component={Link} sx={{float: "right", color: "#fff"}} to="/my-food-list">
             My food List
           </Button>
         </Grid>
       </Grid>
       <Grid container>
-        <Grid item md={6}>
+        <Grid item md={4}>
           <Box
             sx={{ minWidth: 220, width: "fit-content", marginBottom: "1em" }}
           >
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={{...bgColor}}>
               <InputLabel id="demo-simple-select-label">Select Day</InputLabel>
               <Select
                 value={day}
@@ -158,7 +166,7 @@ export default function DailyFoodMenu() {
             <Box
               sx={{ minWidth: 220, width: "fit-content", marginBottom: "1em" }}
             >
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{...bgColor}}>
                 <InputLabel id="demo-simple-select-label">
                   Select Meal Time
                 </InputLabel>
@@ -178,7 +186,7 @@ export default function DailyFoodMenu() {
           )}
           {mealtime && (
             <Autocomplete
-              sx={{ minWidth: 220, width: "fit-content" }}
+              sx={{ minWidth: 220, width: "fit-content", ...bgColor }}
               multiple
               size="small"
               options={foods}

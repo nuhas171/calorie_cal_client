@@ -11,6 +11,7 @@ import {
   CardMedia,
   Card,
 } from "@mui/material";
+import bgImg from "./../assets/searchFood.jpg"
 
 const SearchFood = () => {
   const [searchText, setSearch] = useState("");
@@ -26,7 +27,7 @@ const SearchFood = () => {
   };
 
   return (
-    <Paper sx={{ padding: "1em" }}>
+    <Paper sx={{ padding: "1em", backgroundImage: `url(${bgImg})`, height: "inherit" }}>
       {console.log(foodDetails)}
       <Grid container justifyContent="space-between">
         <Grid item md={9}>
@@ -34,6 +35,7 @@ const SearchFood = () => {
             label="Search Food"
             value={searchText}
             size="small"
+            sx={{background: "#fff", borderRadius: "4px"}}
             onChange={(e) => setSearch(e.target.value)}
           />
         </Grid>
@@ -44,7 +46,7 @@ const SearchFood = () => {
         </Grid>
       </Grid>
       {Object.keys(foodDetails).length && (
-        <Card sx={{ margin: "1em" }}>
+        <Card sx={{ margin: "1em auto", width: "35%" }}>
           <CardMedia
             component="img"
             height="140"

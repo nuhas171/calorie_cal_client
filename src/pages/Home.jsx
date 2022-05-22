@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import bgImg from "./../assets/bg-main.jpg";
+import bgImg from "./../assets/home.jpg";
 import { rapidApiAuth, rapidApiHost } from "./../apiConfig";
 import FuzzySearch from "fuzzy-search";
 
@@ -131,7 +131,7 @@ const Home = () => {
         backgroundRepeat: "no-repeat",
         // width: "100%",
         padding: "2em",
-        // height: "100vh"
+        height: "inherit"
       }}
     >
       <Card
@@ -265,9 +265,10 @@ const Home = () => {
           const result = searcher.search(e.target.value);
           setSearchResult(result)
         }} />
+        <div style={{display: "flex", flexFlow: "row wrap"}}>
         {
           searchResult.map(exer => 
-          <Card sx={{margin: ".5em 0"}}>
+          <Card sx={{margin: ".5em 0", width: "33%"}}>
             <CardMedia
               component="img"
               height="auto"
@@ -282,6 +283,7 @@ const Home = () => {
             </CardContent>
           </Card>)
         }
+        </div>
       </Paper>
     </div>
   );

@@ -25,9 +25,9 @@ const SavedRecipe = () => {
   }, []);
 
   return (
-    <div style={{display: "flex", flexFlow: "row wrap", gap: "2em"}}>
+    <div style={{display: "flex", flexFlow: "row wrap", gap: "2em", justifyContent: "center"}}>
       {recipes.map((recipe) => (
-        <Card sx={{ margin: "1em 0" }}>
+        <Card sx={{ margin: "1em 0", padding: "1em"}}>
           <CardMedia
             component="img"
             height="300"
