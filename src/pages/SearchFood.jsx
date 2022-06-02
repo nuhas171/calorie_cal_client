@@ -46,14 +46,14 @@ const SearchFood = () => {
         </Grid>
       </Grid>
       {Object.keys(foodDetails).length && (
-        <Card sx={{ margin: "1em auto", width: "35%" }}>
+        <Card sx={{ margin: "1em auto", width: "50%" }}>
           <CardMedia
             component="img"
-            height="140"
+            sx={{height: "300px", margin: "1em auto 0 auto", width: 300}}
             image={foodDetails.image}
             alt="green iguana"
           />
-          <CardContent>
+          <CardContent sx={{textAlign: "center"}}>
             <Typography gutterBottom variant="h5" component="div">
               {foodDetails.label}
             </Typography>

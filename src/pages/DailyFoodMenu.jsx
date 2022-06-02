@@ -116,12 +116,10 @@ export default function DailyFoodMenu() {
   return (
     <Paper
       sx={{
-        width: "90%",
-        margin: "1em auto",
-        padding: "1em",
+        padding: "2em",
         boxShadow: "none",
         backgroundImage: `url(${bgImg})`,
-        height: "inherit"
+        height: foodsDetails.length ? "fit-content" : "inherit"
       }}
     >
       <Grid container justifyContent="space-between">
@@ -204,6 +202,7 @@ export default function DailyFoodMenu() {
           )}
         </Grid>
         <Grid item md={6}>
+          {console.log(foodsDetails)}
           <div style={{ display: "flex", flexFlow: "row wrap" }}>
             {foodsDetails.map((f) => (
               <Card key={f.foodId} sx={{ margin: "1em" }}>
@@ -222,10 +221,16 @@ export default function DailyFoodMenu() {
                       Energy: {f.nutrients.ENERC_KCAL}KCAL
                     </Typography>
                     <Typography variant="body2">
-                      FAT: {f.nutrients.FAT}
+                      Carbohydrate: {f.nutrients.CHOCDF}
                     </Typography>
                     <Typography variant="body2">
-                      FAT: {f.nutrients.PROCNT}
+                      Fat: {f.nutrients.FAT}
+                    </Typography>
+                    <Typography variant="body2">
+                      Protin: {f.nutrients.PROCNT}
+                    </Typography>
+                    <Typography variant="body2">
+                      Fiber: {f.nutrients.FIBTG}
                     </Typography>
                   </Paper>
                 </CardContent>
